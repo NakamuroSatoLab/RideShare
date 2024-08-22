@@ -23,12 +23,8 @@ with yt_dlp.YoutubeDL(ydl_options) as ydl:
 # オブジェクトの作成
 cap = cv2.VideoCapture(video_url)
 fps = cap.get(cv2.CAP_PROP_FPS)
-wait_time = int(1/fps)
+wait_time = int(100/fps)
 while True:
-    # オブジェクトの作成
-    cap = cv2.VideoCapture(video_url)
-    fps = cap.get(cv2.CAP_PROP_FPS)
-    wait_time = int(100/fps)
     # 動画を1フレームずつ読み込む
     ret, frame = cap.read()
     if not ret:
@@ -49,3 +45,6 @@ while True:
 
 cap.release()
 cv2.destroyAllWindows()
+
+
+# 一分たったら解析回すって感じの実装でいいかな
