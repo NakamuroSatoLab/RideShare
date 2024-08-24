@@ -1,6 +1,7 @@
 import cv2
 import numpy as np
 from yt_dlp import YoutubeDL
+import matplotlib.pyplot as plt
 
 ydl_opts = {
     'format': 'bv',
@@ -21,7 +22,7 @@ def _get_stream_url(url: str) -> str:
             print(f"ストリームURLの取得中にエラーが発生しました: {e}")
             return None
 
-def get_frame(url: str, max_attempts: int = 10, img_path: str = None) -> np.ndarray:
+def get_frame(url: str, max_attempts: int = 10, img_path: str = None, show: bool = False) -> np.ndarray:
     # ストリームURLの取得
     stream_url = _get_stream_url(url)
     if stream_url is None:
@@ -46,8 +47,4 @@ def get_frame(url: str, max_attempts: int = 10, img_path: str = None) -> np.ndar
 
     if img_path:  # フレームを画像として保存する場合
         cv2.imwrite(img_path, frame)
-        print(f"フレームが {img_path} に保存されました。")
-
-    cap.release()
-    cv2.destroyAllWindows()
-    return frame
+        print(f"
