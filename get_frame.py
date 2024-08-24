@@ -47,4 +47,14 @@ def get_frame(url: str, max_attempts: int = 10, img_path: str = None, show: bool
 
     if img_path:  # フレームを画像として保存する場合
         cv2.imwrite(img_path, frame)
-        print(f"
+        print(f"フレームが {img_path} に保存されました。")
+
+    if show:
+        frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+        plt.imshow(frame_rgb)
+        plt.axis('off')
+        plt.show()
+
+    cap.release()
+    cv2.destroyAllWindows()
+    return frame
