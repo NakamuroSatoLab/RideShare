@@ -9,6 +9,6 @@ urls = ['https://www.youtube.com/watch?v=CO_ZjH6N7RE']
 
 for i in tqdm(range(1000)):
     url = random.choice(urls)
-    img_path = './img/fig' + i + '.png'
+    img_path = f'./img/fig{i}.png'
     arr = get_frame(url, img_path=img_path)
     time.sleep(60)
