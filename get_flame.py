@@ -46,4 +46,8 @@ def get_frame(url: str, max_attempts: int = 10, img_path: str = None) -> np.ndar
 
     if img_path:  # フレームを画像として保存する場合
         cv2.imwrite(img_path, frame)
-        print(f"フレームが {img_path} に保存されました�
+        print(f"フレームが {img_path} に保存されました。")
+
+    cap.release()
+    cv2.destroyAllWindows()
+    return frame
