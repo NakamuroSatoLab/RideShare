@@ -36,40 +36,46 @@ conn.commit()
 model = YOLO('yolov8n.pt')
 rsc = RideShareCounter(model)
 
-while True:
-    # 現在時刻の更新
-    now = datetime.datetime.now()
-    start_time = now.replace(hour=start_time_hour, minute=0, second=0, microsecond=0)
-    end_time = now.replace(hour=end_time_hour, minute=59, second=59, microsecond=0)
+print('処理を実行します。中断するにはCtrl+Cを押してください。')
+try:
+    while True:
+        # 現在時刻の更新
+        now = datetime.datetime.now()
+        start_time = now.replace(hour=start_time_hour, minute=0, second=0, microsecond=0)
+        end_time = now.replace(hour=end_time_hour, minute=59, second=59, microsecond=0)
 
-    if start_time <= now <= end_time:
-        for streaming in urls:
-            url = streaming[0]
-            camera = streaming[1]
+        if start_time <= now <= end_time:
+            for streaming in urls:
+                url = streaming[0]
+                camera = streaming[1]
 
-            dt_now = now.strftime('%Y-%m-%d %H:%M:%S')
-            img_path = f'{save_dir}/{camera}_{dt_now}.png'
+                dt_now = now.strftime('%Y-%m-%d %H:%M:%S')
+                img_path = f'{save_dir}/{camera}_{dt_now}.png'
 
-            # 画像の取得
-            arr = get_frame(url, img_path=img_path)
-            # 推論の実行
-            rsc.update_result(arr)
+                # 画像の取得
+                arr = get_frame(url, img_path=img_path)
+                # 推論の実行
+                rsc.update_result(arr)
 
-            # オブジェクトのカウント
-            num_people = rsc.get_num_class(target_class=0, class_name='person', show=False, color=(255, 0, 0))
-            num_cars = rsc.get_num_class(target_class=2, class_name='car', show=False, color=(0, 0, 255))
-            
-            # 結果の格納
-            cursor.execute("INSERT INTO live_log(date, camera, num_people, num_cars) VALUES (?, ?, ?, ?)", (dt_now, camera, num_people, num_cars))
-            conn.commit()
+                # オブジェクトのカウント
+                num_people = rsc.get_num_class(target_class=0, class_name='person', show=False, color=(255, 0, 0))
+                num_cars = rsc.get_num_class(target_class=2, class_name='car', show=False, color=(0, 0, 255))
+                
+                # 結果の格納
+                cursor.execute("INSERT INTO live_log(date, camera, num_people, num_cars) VALUES (?, ?, ?, ?)", (dt_now, camera, num_people, num_cars))
+                conn.commit()
 
-            print(f"時刻 : {dt_now}   場所 : {camera}")
-            print(f"待機人数 : {num_people}   待機車両数 : {num_cars}")
-            
-            if num_people >= threshold:
-                rsc.save_img(img_path)
+                print(f"時刻 : {dt_now}   場所 : {camera}")
+                print(f"待機人数 : {num_people}   待機車両数 : {num_cars}")
+                
+                if num_people >= threshold:
+                    rsc.save_img(img_path)
 
-    time.sleep(sleep_time)
+        time.sleep(sleep_time)
 
-cursor.close()
-conn.close()
+except KeyboardInterrupt:
+    print('プログラムが中断されました。')
+
+finally:
+    cursor.close()
+    conn.close()

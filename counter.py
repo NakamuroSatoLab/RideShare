@@ -39,15 +39,15 @@ class RideShareCounter():
                 try:
                     cv2_imshow(self.img_arr)  # cv2.imshowの代わりにcv2_imshowを使用
                 except Exception:
-                    print('Google Colabを使用していない場合は`google_colab`をTrueに設定してください')
+                    print('Google Colabを使用していない場合は`google_colab`をTrueに設定してください。')
             else:
                 try:
                     cv2_imshow(self.img_arr)
                 except Exception:
-                    print('Google Colabを使用している場合は`google_colab`をFalseに設定してください')
+                    print('Google Colabを使用している場合は`google_colab`をFalseに設定してください。')
 
         return counter
     
     def save_img(self, img_path: str)
         cv2.imwrite(img_path, self.img_arr)
-        print(f"画像が {img_path} に保存されました")
+        print(f"画像が {img_path} に保存されました。")
