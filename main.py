@@ -1,4 +1,5 @@
 import os
+import time
 import datetime
 import sqlite3
 from ultralytics import YOLO
@@ -29,7 +30,7 @@ dbname = 'database.db'
 conn = sqlite3.connect(dbname)
 cursor = conn.cursor()
 
-cursor.execute("CREATE TABLE live_log (date DATE, camera TEXT, num_people INTEGER, num_cars INTEGER)")
+cursor.execute("CREATE TABLE IF NOT EXISTS live_log (date DATE, camera TEXT, num_people INTEGER, num_cars INTEGER)")
 conn.commit()
 
 # モデルの設定
@@ -53,7 +54,7 @@ try:
                 img_path = f'{save_dir}/{camera}_{dt_now}.png'
 
                 # 画像の取得
-                arr = get_frame(url, img_path=img_path)
+                arr = get_frame(url)
                 # 推論の実行
                 rsc.update_result(arr)
 

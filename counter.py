@@ -1,13 +1,12 @@
 from ultralytics import YOLO
 import numpy as np
 import cv2
-from google.colab.patches import cv2_imshow
 
 class RideShareCounter():
     def __init__(self, model):
         self.model = model
         self.res = 0
-        self.img_arr = np.ndarray()
+        self.img_arr = np.empty(0)
 
     def update_result(self, arr: np.ndarray):
         res = self.model(arr)
@@ -37,17 +36,18 @@ class RideShareCounter():
         if show:
             if google_colab:
                 try:
+                    from google.colab.patches import cv2_imshow
                     cv2_imshow(self.img_arr)  # cv2.imshowの代わりにcv2_imshowを使用
                 except Exception:
                     print('Google Colabを使用していない場合は`google_colab`をTrueに設定してください。')
             else:
                 try:
-                    cv2_imshow(self.img_arr)
+                    cv2.imshow(self.img_arr)
                 except Exception:
                     print('Google Colabを使用している場合は`google_colab`をFalseに設定してください。')
 
         return counter
     
-    def save_img(self, img_path: str)
+    def save_img(self, img_path: str):
         cv2.imwrite(img_path, self.img_arr)
         print(f"画像が {img_path} に保存されました。")
