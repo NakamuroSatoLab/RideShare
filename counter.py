@@ -1,6 +1,7 @@
 from ultralytics import YOLO
 import numpy as np
 import cv2
+import matplotlib.pyplot as plt
 
 class RideShareCounter():
     def __init__(self, model):
@@ -33,18 +34,19 @@ class RideShareCounter():
                 cv2.rectangle(self.img_arr, (x1, y1), (x2, y2), color, 1)
                 cv2.putText(self.img_arr, class_name, (x1, y1 - 2), cv2.FONT_HERSHEY_SIMPLEX, 0.3, color, 1)
         
-        if show:
-            if google_colab:
-                try:
-                    from google.colab.patches import cv2_imshow
-                    cv2_imshow(self.img_arr)  # cv2.imshowの代わりにcv2_imshowを使用
-                except Exception:
-                    print('Google Colabを使用していない場合は`google_colab`をTrueに設定してください。')
-            else:
-                try:
-                    cv2.imshow(self.img_arr)
-                except Exception:
-                    print('Google Colabを使用している場合は`google_colab`をFalseに設定してください。')
+        # if show:
+        #     image_rgb = cv2.cvtColor(self.img_arr, cv2.COLOR_BGR2RGB)
+        #     plt.imshow(image_rgb)
+        #     plt.axis('off')
+        #     plt.show()
+        #     if google_colab:
+        #         try:
+        #             from google.colab.patches import cv2_imshow
+        #             cv2_imshow(self.img_arr)  # cv2.imshowの代わりにcv2_imshowを使用
+        #         except Exception:
+        #             print('Google Colabを使用していない場合は`google_colab`をTrueに設定してください。')
+        #     else:
+        #         cv2.imshow('Detected Objects', self.img_arr)
 
         return counter
     

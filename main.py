@@ -60,7 +60,7 @@ try:
 
                 # オブジェクトのカウント
                 num_people = rsc.get_num_class(target_class=0, class_name='person', show=False, color=(255, 0, 0))
-                num_cars = rsc.get_num_class(target_class=2, class_name='car', show=False, color=(0, 0, 255))
+                num_cars = rsc.get_num_class(target_class=2, class_name='car', show=True, color=(0, 0, 255))
                 
                 # 結果の格納
                 cursor.execute("INSERT INTO live_log(date, camera, num_people, num_cars) VALUES (?, ?, ?, ?)", (dt_now, camera, num_people, num_cars))
