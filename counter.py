@@ -33,23 +33,13 @@ class RideShareCounter():
                 x1, y1, x2, y2 = map(int, box.xyxy[0])
                 cv2.rectangle(self.img_arr, (x1, y1), (x2, y2), color, 1)
                 cv2.putText(self.img_arr, class_name, (x1, y1 - 2), cv2.FONT_HERSHEY_SIMPLEX, 0.3, color, 1)
-        
-        # if show:
-        #     image_rgb = cv2.cvtColor(self.img_arr, cv2.COLOR_BGR2RGB)
-        #     plt.imshow(image_rgb)
-        #     plt.axis('off')
-        #     plt.show()
-        #     if google_colab:
-        #         try:
-        #             from google.colab.patches import cv2_imshow
-        #             cv2_imshow(self.img_arr)  # cv2.imshowの代わりにcv2_imshowを使用
-        #         except Exception:
-        #             print('Google Colabを使用していない場合は`google_colab`をTrueに設定してください。')
-        #     else:
-        #         cv2.imshow('Detected Objects', self.img_arr)
 
         return counter
     
     def save_img(self, img_path: str):
         cv2.imwrite(img_path, self.img_arr)
         print(f"画像が {img_path} に保存されました。")
+
+    def show_img(self, waitkey: int = 0):
+        cv2.imshow('Detected Objects', self.img_arr)
+        cv2.waitKey(waitkey)

@@ -4,7 +4,7 @@ import datetime
 import sqlite3
 from ultralytics import YOLO
 
-from get_frame import get_frame
+import get_frame as gf
 from counter import RideShareCounter
 
 # ここにリンクをリスト形式で貼る
@@ -17,7 +17,7 @@ sleep_time = 600
 start_time_hour = 6
 end_time_hour = 23
 
-# 画像を保存する閾値
+# 検出された人の数がこの閾値を超えると検出画像が保存される
 threshold = 10
 
 # 画像の保存先
@@ -54,7 +54,7 @@ try:
                 img_path = f'{save_dir}/{camera}_{dt_now}.png'
 
                 # 画像の取得
-                arr = get_frame(url)
+                arr = gf.get_frame(url)
                 # 推論の実行
                 rsc.update_result(arr)
 

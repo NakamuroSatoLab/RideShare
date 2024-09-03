@@ -1,7 +1,6 @@
 import cv2
 import numpy as np
 from yt_dlp import YoutubeDL
-import matplotlib.pyplot as plt
 
 ydl_opts = {
     'format': 'bv',
