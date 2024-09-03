@@ -1,2 +1,6 @@
 *.ipynb
 .ipynb-checkpoints
+__pycache__
+/img
+*.db
+*.pt
