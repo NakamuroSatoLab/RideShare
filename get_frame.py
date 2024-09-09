@@ -21,6 +21,7 @@ def _get_stream_url(url: str) -> str:
             print(f"ストリームURLの取得中にエラーが発生しました: {e}")
             return None
 
+# デフォルトで引数を指定
 def get_frame(url: str, max_attempts: int = 10, img_path: str = None, show: bool = False) -> np.ndarray:
     # ストリームURLの取得
     stream_url = _get_stream_url(url)
@@ -36,6 +37,7 @@ def get_frame(url: str, max_attempts: int = 10, img_path: str = None, show: bool
     # フレームを取得
     for attempt in range(max_attempts):
         ret, frame = cap.read()
+        # キャプチャできたらループを抜ける
         if ret:
             break
     else:  # max_attemptsまでにフレームを取得できなかった場合の処理

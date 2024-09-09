@@ -9,11 +9,12 @@ from counter import RideShareCounter
 
 # ここにリンクをリスト形式で貼る
 urls = [
-    ['https://www.youtube.com/watch?v=CO_ZjH6N7RE', '京都駅八条口']
+    ['https://www.youtube.com/watch?v=CO_ZjH6N7RE', '京都駅八条口'],
+    ['https://www.youtube.com/watch?v=_d9IF_POrCg', '福井駅東口']
 ]
 
 # 実行時間の設定
-sleep_time = 600
+sleep_time = 55.8
 start_time_hour = 6
 end_time_hour = 23
 
@@ -28,6 +29,7 @@ if not os.path.exists(save_dir):
 # データベースの設定
 dbname = 'database.db'
 conn = sqlite3.connect(dbname)
+# DBのインターフェース
 cursor = conn.cursor()
 
 cursor.execute("CREATE TABLE IF NOT EXISTS live_log (date DATE, camera TEXT, num_people INTEGER, num_cars INTEGER)")
